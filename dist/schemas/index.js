@@ -10,7 +10,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./enums"), exports);
-__exportStar(require("./interfaces"), exports);
-__exportStar(require("./classes"), exports);
-__exportStar(require("./schemas"), exports);
+exports.initiateMongoose = void 0;
+var mongoose = require('mongoose');
+__exportStar(require("./binance-product.schema"), exports);
+__exportStar(require("./ticker-symbol.schema"), exports);
+__exportStar(require("./watch-list.schema"), exports);
+function initiateMongoose(uri) {
+    return mongoose.connect(uri);
+}
+exports.initiateMongoose = initiateMongoose;
