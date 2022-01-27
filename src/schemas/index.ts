@@ -5,6 +5,6 @@ export * from './ticker-symbol.schema';
 export * from './watch-list.schema';
 
 
-function initiateMongoose(uri: string): Promise<any> {
+export function initiateMongoose(uri: string): Promise<any> {
   return mongoose.connect(uri);
 }
