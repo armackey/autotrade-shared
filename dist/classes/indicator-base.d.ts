@@ -3,8 +3,8 @@ export declare class IndicatorBase {
     private candles;
     points: number;
     constructor(candles: AutoTradeCandle[]);
-    isPurchasable(): boolean;
-    shouldRemoveFromWatchList(): boolean;
+    calcPoints(): void;
+    shouldRemoveFromWatchList(points: number): boolean;
     private ma_helper;
     private getEMA;
     private getSMA;

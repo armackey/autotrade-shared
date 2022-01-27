@@ -12,9 +12,9 @@ export class IndicatorBase {
 
   constructor(private candles: AutoTradeCandle[]) {}
 
-  isPurchasable(): boolean {
+  calcPoints(): void {
     
-    if (!this.isRSIBuyable([...this.candles])) return false;
+    if (!this.isRSIBuyable([...this.candles])) return;
     
     this.points += 1;
 
@@ -26,7 +26,7 @@ export class IndicatorBase {
     // console.log('sma9', parseFloat(sma9[0]?.y).toFixed(5))
     // console.log('ema5 > sma9', ema5 > sma9);
 
-    if (!this.ma_helper(ema5, sma9)) { return false; }
+    if (!this.ma_helper(ema5, sma9)) { return; }
 
     this.points += 1;
 
@@ -34,18 +34,41 @@ export class IndicatorBase {
     const sma50 = this.getSMA(50, this.candles);
 
 
-    if (!this.ma_helper(sma9, sma20)) { return false; }
+    if (!this.ma_helper(sma9, sma20)) { return; }
 
     this.points += 1;
 
-    if (!this.ma_helper(sma20, sma50)) { return false; }
+    if (!this.ma_helper(sma20, sma50)) { return; }
 
     this.points += 1;
-
-    return true;
   }
 
-  shouldRemoveFromWatchList(): boolean {
+  shouldRemoveFromWatchList(points: number): boolean {
+    const ema5 = this.getEMA(5, this.candles);
+    const sma9 = this.getSMA(9, this.candles);
+    const sma20 = this.getSMA(20, this.candles);
+    const sma50 = this.getSMA(50, this.candles);
+
+    if (!this.isRSIBuyable([...this.candles])) {
+      points-=1;
+      if (points <= 0) return true;
+    }
+
+    if (!this.ma_helper(ema5, sma9)) {
+      points-=1;
+      if (points <= 0) return true;
+    }
+
+    if (!this.ma_helper(sma9, sma20)) {
+      points-=1;
+      if (points <= 0) return true;
+    }
+
+    if (!this.ma_helper(sma20, sma50)) {
+      points-=1;
+      if (points <= 0) return true;
+    }
+  
     return false;
   }
 

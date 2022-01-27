@@ -16,9 +16,9 @@ var IndicatorBase = /** @class */ (function () {
         this.candles = candles;
         this.points = 0;
     }
-    IndicatorBase.prototype.isPurchasable = function () {
+    IndicatorBase.prototype.calcPoints = function () {
         if (!this.isRSIBuyable(__spreadArray([], this.candles, true)))
-            return false;
+            return;
         this.points += 1;
         var ema5 = this.getEMA(5, this.candles);
         var sma9 = this.getSMA(9, this.candles);
@@ -27,22 +27,45 @@ var IndicatorBase = /** @class */ (function () {
         // console.log('sma9', parseFloat(sma9[0]?.y).toFixed(5))
         // console.log('ema5 > sma9', ema5 > sma9);
         if (!this.ma_helper(ema5, sma9)) {
-            return false;
+            return;
         }
         this.points += 1;
         var sma20 = this.getSMA(20, this.candles);
         var sma50 = this.getSMA(50, this.candles);
         if (!this.ma_helper(sma9, sma20)) {
-            return false;
+            return;
         }
         this.points += 1;
         if (!this.ma_helper(sma20, sma50)) {
-            return false;
+            return;
         }
         this.points += 1;
-        return true;
     };
-    IndicatorBase.prototype.shouldRemoveFromWatchList = function () {
+    IndicatorBase.prototype.shouldRemoveFromWatchList = function (points) {
+        var ema5 = this.getEMA(5, this.candles);
+        var sma9 = this.getSMA(9, this.candles);
+        var sma20 = this.getSMA(20, this.candles);
+        var sma50 = this.getSMA(50, this.candles);
+        if (!this.isRSIBuyable(__spreadArray([], this.candles, true))) {
+            points -= 1;
+            if (points <= 0)
+                return true;
+        }
+        if (!this.ma_helper(ema5, sma9)) {
+            points -= 1;
+            if (points <= 0)
+                return true;
+        }
+        if (!this.ma_helper(sma9, sma20)) {
+            points -= 1;
+            if (points <= 0)
+                return true;
+        }
+        if (!this.ma_helper(sma20, sma50)) {
+            points -= 1;
+            if (points <= 0)
+                return true;
+        }
         return false;
     };
     IndicatorBase.prototype.ma_helper = function (lower, higher) {
