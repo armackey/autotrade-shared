@@ -2,7 +2,7 @@ export interface WatchListItem {
     ticker: string;
     points: number;
     lastCandleTime: number;
-    _id: string;
+    _id?: string;
 }
 export interface WatchList {
     name: string;

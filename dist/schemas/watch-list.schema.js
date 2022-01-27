@@ -7,6 +7,7 @@ var WatchListSchema = new Schema({
     name: String,
     items: [
         {
+            name: String,
             ticker: String,
             lastCandleTime: Number,
             points: { type: Number, default: 0 }
