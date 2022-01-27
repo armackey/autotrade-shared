@@ -13,7 +13,6 @@ export class IndicatorBase {
   constructor(private candles: AutoTradeCandle[]) {}
 
   calcPoints(): void {
-    
     if (!this.isRSIBuyable([...this.candles])) return;
     
     this.points += 1;
