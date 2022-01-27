@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 export * from './binance-product.schema';
 export * from './ticker-symbol.schema';
