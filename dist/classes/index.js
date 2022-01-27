@@ -14,3 +14,4 @@ __exportStar(require("./polygon-aggregates"), exports);
 __exportStar(require("./polygon-base"), exports);
 __exportStar(require("./indicator-base"), exports);
 __exportStar(require("./determine-job-run"), exports);
+__exportStar(require("./watch-list-update"), exports);
