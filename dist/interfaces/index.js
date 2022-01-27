@@ -13,3 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./autotrade-candle"), exports);
 __exportStar(require("./candle-batch.payload"), exports);
 __exportStar(require("./ticker-name-symbol"), exports);
+__exportStar(require("./watch-list"), exports);
