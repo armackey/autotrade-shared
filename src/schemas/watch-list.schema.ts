@@ -8,7 +8,7 @@ const WatchListSchema = new Schema({
     {
       name: String,
       ticker: String,
-      lastCandleTime: Number,
+      lastCandleTime: String,
       points: { type: Number, default: 0 }
     }
   ],
