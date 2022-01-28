@@ -1,4 +1,5 @@
-import { isMonday, isTuesday, isWednesday, isThursday, isFriday, format } from 'date-fns';
+import { isMonday, isTuesday, isWednesday, isThursday, isFriday } from 'date-fns';
+import { formatInTimeZone } from 'date-fns-tz';
 
 export class DetermineJobRun {
   date = Date.now();
@@ -12,8 +13,8 @@ export class DetermineJobRun {
   }
 
   private isCorrectTime(): boolean {
-    const hour = parseInt(format(this.date, 'H'));
-    const minute = parseInt(format(this.date, 'm'));
-    return (hour === 6 && minute >= 20) || (hour > 6 && hour < 13);
+    const hour = parseInt(formatInTimeZone(this.date, 'America/New_York', 'H'));
+    const minute = parseInt(formatInTimeZone(this.date, 'America/New_York', 'm'));
+    return (hour === 9 && minute >= 20) || (hour > 9 && hour < 16);
   }
 }
