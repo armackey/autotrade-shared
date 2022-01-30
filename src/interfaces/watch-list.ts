@@ -1,7 +1,8 @@
 export interface WatchListItem {
   ticker: string,
   points: number,
-  lastCandleTime: string,
+  lastCandleTime: number,
+  lastCandleTimeReadable: string,
   _id?: string,
 }
 
