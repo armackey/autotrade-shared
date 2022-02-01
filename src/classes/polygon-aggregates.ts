@@ -71,7 +71,7 @@ export class PolygonAggregate extends PolygonBase {
 
     private lastCandleWithinMinuteMark(minute: number, candle: IAggsResults): boolean {
       const date = Date.now();
-      if (candle?.t) return (candle?.t + ((1000 * 60) + minute)) < date;
+      if (candle?.t) return (candle?.t + ((1000 * 60) * minute)) < date;
       return false;
     }
   

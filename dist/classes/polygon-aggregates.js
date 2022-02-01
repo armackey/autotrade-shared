@@ -137,7 +137,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
     PolygonAggregate.prototype.lastCandleWithinMinuteMark = function (minute, candle) {
         var date = Date.now();
         if (candle === null || candle === void 0 ? void 0 : candle.t)
-            return ((candle === null || candle === void 0 ? void 0 : candle.t) + ((1000 * 60) + minute)) < date;
+            return ((candle === null || candle === void 0 ? void 0 : candle.t) + ((1000 * 60) * minute)) < date;
         return false;
     };
     PolygonAggregate.prototype.onMultiplier = function (ticker, timespan, multipliers, from, to, query) {
