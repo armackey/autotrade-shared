@@ -16,6 +16,7 @@ export declare class PolygonAggregate extends PolygonBase {
         one_hour?: IAggs[];
         one_day?: IAggs[];
     } | undefined>;
+    private lastCandleWithinMinuteMark;
     private onMultiplier;
     private onTimeSpan;
     private getCandles;

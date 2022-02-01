@@ -99,7 +99,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
                         merged_one = [].concat.apply([], result_one);
                         multipliers.map(function (m, idx) {
                             var _a;
-                            obj = __assign(__assign({}, obj), (_a = {}, _a[_this.createKey(m)] = merged_one.filter(function (item, index) { var _a; return (index % multipliers.length === idx) && ((_a = item === null || item === void 0 ? void 0 : item.results) === null || _a === void 0 ? void 0 : _a.length) > 100; }), _a));
+                            obj = __assign(__assign({}, obj), (_a = {}, _a[_this.createKey(m)] = merged_one.filter(function (item, index) { var _a; return (index % multipliers.length === idx) && ((_a = item === null || item === void 0 ? void 0 : item.results) === null || _a === void 0 ? void 0 : _a.length) > 100 && _this.lastCandleWithinMinuteMark(5, item === null || item === void 0 ? void 0 : item.results[0]); }), _a));
                         });
                         _a.label = 3;
                     case 3:
@@ -110,7 +110,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
                         merged_two = [].concat.apply([], result_two);
                         timespan.map(function (m, idx) {
                             var _a;
-                            obj = __assign(__assign({}, obj), (_a = {}, _a[_this.createKey(m)] = merged_two.filter(function (item, index) { var _a; return (index % multipliers.length === idx) && ((_a = item === null || item === void 0 ? void 0 : item.results) === null || _a === void 0 ? void 0 : _a.length) > 100; }), _a));
+                            obj = __assign(__assign({}, obj), (_a = {}, _a[_this.createKey(m)] = merged_two.filter(function (item, index) { var _a; return (index % multipliers.length === idx) && ((_a = item === null || item === void 0 ? void 0 : item.results) === null || _a === void 0 ? void 0 : _a.length) > 100 && _this.lastCandleWithinMinuteMark(5, item === null || item === void 0 ? void 0 : item.results[0]); }), _a));
                         });
                         _a.label = 5;
                     case 5: 
@@ -133,6 +133,12 @@ var PolygonAggregate = /** @class */ (function (_super) {
                 }
             });
         });
+    };
+    PolygonAggregate.prototype.lastCandleWithinMinuteMark = function (minute, candle) {
+        var date = Date.now();
+        if (candle === null || candle === void 0 ? void 0 : candle.t)
+            return ((candle === null || candle === void 0 ? void 0 : candle.t) + ((1000 * 60) + minute)) < date;
+        return false;
     };
     PolygonAggregate.prototype.onMultiplier = function (ticker, timespan, multipliers, from, to, query) {
         var _this = this;

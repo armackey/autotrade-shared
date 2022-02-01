@@ -2,6 +2,7 @@ import { PolygonBase } from "./polygon-base";
 import { format, subDays } from 'date-fns';
 import { TickerNameSymbol } from '..';
 import { IAggs, IAggsQuery } from "@polygon.io/client-js";
+import { IAggsResults } from "@polygon.io/client-js/lib/rest/stocks/aggregates";
 
 export class PolygonAggregate extends PolygonBase {
   constructor(api: string) {
@@ -33,7 +34,7 @@ export class PolygonAggregate extends PolygonBase {
           multipliers.map((m, idx) => {
             obj = {
               ...obj,
-              [this.createKey(m) as string]: merged_one.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100)
+              [this.createKey(m) as string]: merged_one.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100 && this.lastCandleWithinMinuteMark(5, item?.results[0]))
             };
           });
         }
@@ -45,7 +46,7 @@ export class PolygonAggregate extends PolygonBase {
           timespan.map((m, idx) => {
             obj = {
               ...obj,
-              [this.createKey(m) as string]: merged_two.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100)
+              [this.createKey(m) as string]: merged_two.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100 && this.lastCandleWithinMinuteMark(5, item?.results[0]))
             };
           });
         }
@@ -66,6 +67,12 @@ export class PolygonAggregate extends PolygonBase {
       } catch (error) {
         console.log(error);
       }
+    }
+
+    private lastCandleWithinMinuteMark(minute: number, candle: IAggsResults): boolean {
+      const date = Date.now();
+      if (candle?.t) return (candle?.t + ((1000 * 60) + minute)) < date;
+      return false;
     }
   
     private onMultiplier(ticker: string, timespan: 'minute' | 'hour' | 'day', multipliers: number[], from: string, to: string, query?: IAggsQuery) {
