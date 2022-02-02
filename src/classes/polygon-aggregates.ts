@@ -15,7 +15,7 @@ export class PolygonAggregate extends PolygonBase {
    * result_2 is 1 hour and 1 day intervals
    * @param tickers 
    */
-     async init(tickers: TickerNameSymbol[], multipliers: number[] = [], timespan: string[] = []): Promise<{ one_minute?: IAggs[], five_minute?: IAggs[], thirty_minute?: IAggs[], one_hour?: IAggs[], one_day?: IAggs[] } | undefined> {
+     async init(tickers: TickerNameSymbol[], multipliers: number[] = [], timespan: string[] = [], additionalFilters?: Function[]): Promise<{ one_minute?: IAggs[], five_minute?: IAggs[], thirty_minute?: IAggs[], one_hour?: IAggs[], one_day?: IAggs[] } | undefined> {
       const to = Date.now();
       const from = subDays(new Date(to), 10);
       let obj = {};
@@ -30,11 +30,15 @@ export class PolygonAggregate extends PolygonBase {
         if (multipliers.length) {
           result_one = await Promise.all(tickers.map(ticker => this.onMultiplier(ticker.symbol, 'minute', multipliers, format(from, 'yyyy-MM-dd'), format(to, 'yyyy-MM-dd'), { limit: 120 })));
           merged_one = [].concat.apply([], result_one);
+
+          if (additionalFilters?.length) {
+            
+          }
   
           multipliers.map((m, idx) => {
             obj = {
               ...obj,
-              [this.createKey(m) as string]: merged_one.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100 && this.lastCandleWithinMinuteMark(5, item?.results[0]))
+              [this.createKey(m) as string]: merged_one.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100)
             };
           });
         }
@@ -46,7 +50,7 @@ export class PolygonAggregate extends PolygonBase {
           timespan.map((m, idx) => {
             obj = {
               ...obj,
-              [this.createKey(m) as string]: merged_two.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100 && this.lastCandleWithinMinuteMark(5, item?.results[0]))
+              [this.createKey(m) as string]: merged_two.filter((item: any, index: number) => (index % multipliers.length === idx) && item?.results?.length > 100)
             };
           });
         }
@@ -67,12 +71,6 @@ export class PolygonAggregate extends PolygonBase {
       } catch (error) {
         console.log(error);
       }
-    }
-
-    private lastCandleWithinMinuteMark(minute: number, candle: IAggsResults): boolean {
-      const date = Date.now();
-      if (candle?.t) return (candle?.t + ((1000 * 60) * minute)) < date;
-      return false;
     }
   
     private onMultiplier(ticker: string, timespan: 'minute' | 'hour' | 'day', multipliers: number[], from: string, to: string, query?: IAggsQuery) {

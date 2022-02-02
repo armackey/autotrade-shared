@@ -9,14 +9,13 @@ export declare class PolygonAggregate extends PolygonBase {
    * result_2 is 1 hour and 1 day intervals
    * @param tickers
    */
-    init(tickers: TickerNameSymbol[], multipliers?: number[], timespan?: string[]): Promise<{
+    init(tickers: TickerNameSymbol[], multipliers?: number[], timespan?: string[], additionalFilters?: Function[]): Promise<{
         one_minute?: IAggs[];
         five_minute?: IAggs[];
         thirty_minute?: IAggs[];
         one_hour?: IAggs[];
         one_day?: IAggs[];
     } | undefined>;
-    private lastCandleWithinMinuteMark;
     private onMultiplier;
     private onTimeSpan;
     private getCandles;

@@ -1,5 +1,6 @@
 import { AutoTradeCandle } from "..";
 import { EMA, SMA, RSI, MACD, DEMA } from "trading-signals";
+import { IAggsResults } from "@polygon.io/client-js/lib/rest/stocks/aggregates";
 
 interface Point {
   x: number;
