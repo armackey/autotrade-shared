@@ -15,7 +15,9 @@ export class PolygonAggregate extends PolygonBase {
    * result_2 is 1 hour and 1 day intervals
    * @param tickers 
    */
-     async init(tickers: TickerNameSymbol[], multipliers: number[] = [], timespan: string[] = []): Promise<{ one_minute?: IAggs[], five_minute?: IAggs[], thirty_minute?: IAggs[], one_hour?: IAggs[], one_day?: IAggs[] } | undefined> {
+     async init(tickers: TickerNameSymbol[], multipliers: number[] = [], timespan: string[] = [], options?: {
+       limitCandles?: number
+     }): Promise<{ one_minute?: IAggs[], five_minute?: IAggs[], thirty_minute?: IAggs[], one_hour?: IAggs[], one_day?: IAggs[] } | undefined> {
       const to = Date.now();
       const from = subDays(new Date(to), 10);
       let obj = {};
@@ -28,7 +30,7 @@ export class PolygonAggregate extends PolygonBase {
   
       try {
         if (multipliers.length) {
-          result_one = await Promise.all(tickers.map(ticker => this.onMultiplier(ticker.symbol, 'minute', multipliers, format(from, 'yyyy-MM-dd'), format(to, 'yyyy-MM-dd'), { limit: 120 })));
+          result_one = await Promise.all(tickers.map(ticker => this.onMultiplier(ticker.symbol, 'minute', multipliers, format(from, 'yyyy-MM-dd'), format(to, 'yyyy-MM-dd'), { limit: options?.limitCandles || 120 })));
           merged_one = [].concat.apply([], result_one);
   
           multipliers.map((m, idx) => {
@@ -40,7 +42,7 @@ export class PolygonAggregate extends PolygonBase {
         }
   
         if (timespan.length) {
-          result_two = await Promise.all(tickers.map(ticker => this.onTimeSpan(ticker.symbol, 1, ['hour', 'day'], format(from, 'yyyy-MM-dd'), format(to, 'yyyy-MM-dd'), { limit: 120 })));
+          result_two = await Promise.all(tickers.map(ticker => this.onTimeSpan(ticker.symbol, 1, ['hour', 'day'], format(from, 'yyyy-MM-dd'), format(to, 'yyyy-MM-dd'), { limit: options?.limitCandles || 120 })));
           merged_two = [].concat.apply([], result_two);
   
           timespan.map((m, idx) => {

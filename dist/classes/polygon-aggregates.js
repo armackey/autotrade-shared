@@ -76,7 +76,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
    * result_2 is 1 hour and 1 day intervals
    * @param tickers
    */
-    PolygonAggregate.prototype.init = function (tickers, multipliers, timespan) {
+    PolygonAggregate.prototype.init = function (tickers, multipliers, timespan, options) {
         if (multipliers === void 0) { multipliers = []; }
         if (timespan === void 0) { timespan = []; }
         return __awaiter(this, void 0, void 0, function () {
@@ -93,7 +93,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
                     case 1:
                         _a.trys.push([1, 6, , 7]);
                         if (!multipliers.length) return [3 /*break*/, 3];
-                        return [4 /*yield*/, Promise.all(tickers.map(function (ticker) { return _this.onMultiplier(ticker.symbol, 'minute', multipliers, (0, date_fns_1.format)(from, 'yyyy-MM-dd'), (0, date_fns_1.format)(to, 'yyyy-MM-dd'), { limit: 120 }); }))];
+                        return [4 /*yield*/, Promise.all(tickers.map(function (ticker) { return _this.onMultiplier(ticker.symbol, 'minute', multipliers, (0, date_fns_1.format)(from, 'yyyy-MM-dd'), (0, date_fns_1.format)(to, 'yyyy-MM-dd'), { limit: (options === null || options === void 0 ? void 0 : options.limitCandles) || 120 }); }))];
                     case 2:
                         result_one = _a.sent();
                         merged_one = [].concat.apply([], result_one);
@@ -104,7 +104,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
                         _a.label = 3;
                     case 3:
                         if (!timespan.length) return [3 /*break*/, 5];
-                        return [4 /*yield*/, Promise.all(tickers.map(function (ticker) { return _this.onTimeSpan(ticker.symbol, 1, ['hour', 'day'], (0, date_fns_1.format)(from, 'yyyy-MM-dd'), (0, date_fns_1.format)(to, 'yyyy-MM-dd'), { limit: 120 }); }))];
+                        return [4 /*yield*/, Promise.all(tickers.map(function (ticker) { return _this.onTimeSpan(ticker.symbol, 1, ['hour', 'day'], (0, date_fns_1.format)(from, 'yyyy-MM-dd'), (0, date_fns_1.format)(to, 'yyyy-MM-dd'), { limit: (options === null || options === void 0 ? void 0 : options.limitCandles) || 120 }); }))];
                     case 4:
                         result_two = _a.sent();
                         merged_two = [].concat.apply([], result_two);
