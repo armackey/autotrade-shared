@@ -76,7 +76,7 @@ var PolygonAggregate = /** @class */ (function (_super) {
    * result_2 is 1 hour and 1 day intervals
    * @param tickers
    */
-    PolygonAggregate.prototype.init = function (tickers, multipliers, timespan, additionalFilters) {
+    PolygonAggregate.prototype.init = function (tickers, multipliers, timespan) {
         if (multipliers === void 0) { multipliers = []; }
         if (timespan === void 0) { timespan = []; }
         return __awaiter(this, void 0, void 0, function () {
@@ -97,8 +97,6 @@ var PolygonAggregate = /** @class */ (function (_super) {
                     case 2:
                         result_one = _a.sent();
                         merged_one = [].concat.apply([], result_one);
-                        if (additionalFilters === null || additionalFilters === void 0 ? void 0 : additionalFilters.length) {
-                        }
                         multipliers.map(function (m, idx) {
                             var _a;
                             obj = __assign(__assign({}, obj), (_a = {}, _a[_this.createKey(m)] = merged_one.filter(function (item, index) { var _a; return (index % multipliers.length === idx) && ((_a = item === null || item === void 0 ? void 0 : item.results) === null || _a === void 0 ? void 0 : _a.length) > 100; }), _a));
