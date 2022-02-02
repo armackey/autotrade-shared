@@ -70,7 +70,7 @@ var IndicatorBase = /** @class */ (function () {
     };
     IndicatorBase.prototype.ma_helper = function (lower, higher) {
         var _a, _b, _c, _d, _e;
-        if (parseFloat(lower[3].y) > parseFloat((_a = higher[3]) === null || _a === void 0 ? void 0 : _a.y)) {
+        if (parseFloat(lower[2].y) > parseFloat((_a = higher[2]) === null || _a === void 0 ? void 0 : _a.y)) {
             return false;
         }
         return (parseFloat((_b = lower[0]) === null || _b === void 0 ? void 0 : _b.y) > parseFloat((_c = higher[0]) === null || _c === void 0 ? void 0 : _c.y)) && (parseFloat((_d = lower[1]) === null || _d === void 0 ? void 0 : _d.y) > parseFloat((_e = higher[1]) === null || _e === void 0 ? void 0 : _e.y));

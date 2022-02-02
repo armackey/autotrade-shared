@@ -72,17 +72,17 @@ export class IndicatorBase {
     return false;
   }
 
-  private ma_helper(lower: Point[], higher: Point[]): boolean {
-    if (parseFloat(lower[3].y) > parseFloat(higher[3]?.y)) { return false }
+  protected ma_helper(lower: Point[], higher: Point[]): boolean {
+    if (parseFloat(lower[2].y) > parseFloat(higher[2]?.y)) { return false }
     return ( parseFloat(lower[0]?.y) > parseFloat(higher[0]?.y) ) && ( parseFloat(lower[1]?.y) > parseFloat(higher[1]?.y) );
   }
 
-  getEMA(period: number, candles: AutoTradeCandle[]): Point[] {
+  protected getEMA(period: number, candles: AutoTradeCandle[]): Point[] {
     const ema = new EMA(period);
     return this.indicatorMapHelper(period, candles, ema);
   }
 
-  getSMA(period: number, candles: AutoTradeCandle[]): Point[] {
+  protected getSMA(period: number, candles: AutoTradeCandle[]): Point[] {
     const sma = new SMA(period);
     return this.indicatorMapHelper(period, candles, sma);
   }
