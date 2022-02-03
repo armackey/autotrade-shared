@@ -125,6 +125,6 @@ export class IndicatorBase {
         y: c,
         x: array[index][0].openTime || array[index][0].t
       }
-    }).reverse();
+    });
   }
 }
