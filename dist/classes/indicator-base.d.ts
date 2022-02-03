@@ -10,8 +10,8 @@ export declare class IndicatorBase {
     calcPoints(): void;
     shouldRemoveFromWatchList(points: number): boolean;
     protected ma_helper(lower: Point[], higher: Point[]): boolean;
-    protected getEMA(period: number, candles: AutoTradeCandle[]): Point[];
-    protected getSMA(period: number, candles: AutoTradeCandle[]): Point[];
+    getEMA(period: number, candles: AutoTradeCandle[]): Point[];
+    getSMA(period: number, candles: AutoTradeCandle[]): Point[];
     private isRSIBuyable;
     private calcMACD;
     private indicatorMapHelper;
